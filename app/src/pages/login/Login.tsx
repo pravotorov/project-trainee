@@ -13,8 +13,6 @@ import Button from '@material-ui/core/Button';
 import Logo from '../../images/logo.png'
 
 
-
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
