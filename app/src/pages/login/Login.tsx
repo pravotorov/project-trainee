@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
+import { Paper, Grid, Typography, Divider, TextField, Button } from '@material-ui/core'
 
 import Logo from '../../images/logo.png'
 
@@ -16,40 +9,74 @@ import Logo from '../../images/logo.png'
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            flexGrow: 1,
+            flexGrow: 3,
+        },
+        page: {
+            height: '100%',
+            width: '50% !important',
+            padding: '0px !important',
+            display: 'block',
         },
         media: {
-            paddingTop: '100%', // 16:9
+            height: '50%',
+            width: '50%',
         },
         paper: {
-            padding: theme.spacing(2),
+            marginTop: '40%',
             textAlign: 'center',
             color: theme.palette.text.secondary,
         },
         field: {
             '& > *': {
                 margin: theme.spacing(1),
-                width: '25ch',
+                width: '90%',
+                marginTop: '10px 0px 10px 0px',
             },
+            'input': {
+                height: '50%'
+
+            }
+
+        },
+        but: {
+            margin: '10px',
+            width: '90%',
+            height: '10%',
         }
     }),
 );
 
+type InputEvent = React.ChangeEvent<HTMLInputElement>;
+type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
+
+
 const Login = () => {
+
+    const [credits, setCredits] = useState({
+        email: '',
+        password: ''
+    })
+
+    const handleEmailChange = (e: InputEvent) => {
+        setCredits({...credits, email: e.target.value});
+    }
+
+    const handlePasswordChange = (e: InputEvent) => {
+        setCredits({...credits, password: e.target.value});
+    }
+
+    const submit = (e:  ButtonEvent): void => {
+        console.log("CREDITS", credits);
+        e.preventDefault();
+    }
 
   const classes = useStyles();
 
   return (
-      <div className={classes.root}>
-          <Grid container spacing={3} justify = "center">
-              <Grid item xs={4}>
+          <Grid container   spacing={2} justify = "center">
+              <Grid className={classes.page} item xs={2}>
                   <Paper className={classes.paper}>
-
-                      <CardMedia
-                          className={classes.media}
-                          image={Logo}
-                          title="Paella dish"
-                      />
+                      <img className={classes.media} src={Logo} alt="logo" />
                       <Typography gutterBottom variant="h6" component="h2">
                           Exceed-team
                       </Typography>
@@ -61,25 +88,24 @@ const Login = () => {
                                   id="outlined-required"
                                   label="Login"
                                   variant="outlined"
+                                  onChange={handleEmailChange}
                               />
                               <TextField
                                   required
                                   id="outlined-required"
                                   label="Password"
                                   variant="outlined"
-                                />
+                                  onChange={handlePasswordChange}
+                              />
                           </form>
 
                       <Divider variant="middle" />
-                      <Button variant="contained" color="primary">
+                      <Button className={classes.but} variant="contained" color="primary" onClick={submit}>
                           Sign IN
                       </Button>
                   </Paper>
-
               </Grid>
-
           </Grid>
-      </div>
   )
 
 }
